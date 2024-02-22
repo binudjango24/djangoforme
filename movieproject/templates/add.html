@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 style="background-color:red">hai welcome to add file</h3>
+{% extends 'base.html' %}
+{% block body  %}
+<form METHOD="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Enter your movie nme?"><br>
+     <input type="text" name="desc" placeholder="Enter your movie description?"><br>
+     <input type="number" name="year" placeholder="Enter releasing year?"><br>
+     <input type="file" name="image" ><br>
+    <input type="submit">
+</form>
+{% endblock %}
+</body>
+</html>
