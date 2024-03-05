@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+{% if category  %}
+   {{ category.description|truncatewords:185 }}
+{% else %}
+  <h2><b>you can order online @ www.deliciousfoods.com </b></h2>
+{% endif %}
+{%   endblock %}
+{% block title %}
+  {% if category %}
+         {{category.name}}-DELICIOUS FOOD ITEMS
+  {% else %}
+ ALL TYPES OF BIRIYANIS AVAILABLE
+  {% endif %}
+{%   endblock %}
+{% block content %}
+{% if category %}
+<div>
+    <div class="row my_row_class">
+        <div class="mx_auto">
+        <p style="background-color:magenta;">
+            <a href="{% url 'ecommerceapp:allProdCat' %}">Our Product Collections</a></p>
+            </div>
+        </div>
+</div>
+{% endif %}
+<div class="mx_auto">
+    {% if category %}
+    <img class="my_image" src="{{category.image.url}}" alt="{{category.name}}">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title">{{category.name}}</h1>
+    <p class="text-justify">{{category.description}}</p>
+</div>
+     {% else %}
+<div>
+<img class="my_image my_image_padding" src="{% static 'img/foodbanner.png' %}" alt="our products" width="1050px" >
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title">OUR PRODUCTS COLLECTION</h1>
+    <p class="text-justify" style="background-color:violet;"><b> VARIETY OF FOOD COLLECTION</b> </p>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 xol-lg-4">
+            <div class="card text-center" style="min-width=18rem;">
+                <a href="{{product.get_url}}"><img class="card-img-top my_image" src="{{product.image.url}}" alt="{{product.name}}"></a>
+                <div class="card-body">
+                    <h4>{{product.name}}</h4>
+                     <p>{{product.price}}</p>
+                </div>
+            </div>
+        </div>
+         {% endfor %}
+    </div>
+    <div class="mx_auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+               {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
